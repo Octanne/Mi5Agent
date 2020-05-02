@@ -27,24 +27,25 @@ public class SanctionContainer {
 		File file = new File(pathFolder+sanction.getID().toString()+".yml");
 		YamlConfiguration config = YamlConfiguration.loadConfiguration(file);
 		if(sanction instanceof Ban) {
-			config.set(".type", "ban");
-			config.set(".sanctionerID", sanction.getSanctionerID());
-			config.set(".reason", sanction.getReason());
-			config.set(".date", sanction.getDate());
-			config.set(".untilDate", ((Ban) sanction).getUntilDate() != null ?
+			config.set(sanction.getID()+".type", "ban");
+			config.set(sanction.getID()+".sanctionerID", sanction.getSanctionerID());
+			config.set(sanction.getID()+".reason", sanction.getReason());
+			config.set(sanction.getID()+".date", sanction.getDate());
+			config.set(sanction.getID()+".untilDate", ((Ban) sanction).getUntilDate() != null ?
 					((Ban) sanction).getUntilDate().getTimeInMillis() : 0);
 		}else if(sanction instanceof Mute) {
-			config.set(".type", "mute");
-			config.set(".sanctionerID", sanction.getSanctionerID());
-			config.set(".reason", sanction.getReason());
-			config.set(".date", sanction.getDate());
-			config.set(".untilDate", ((Mute) sanction).getUntilDate() != null ?
+			config.set(sanction.getID()+".type", "mute");
+			config.set(sanction.getID()+".sanctionerID", sanction.getSanctionerID());
+			config.set(sanction.getID()+".reason", sanction.getReason());
+			config.set(sanction.getID()+".date", sanction.getDate());
+			config.set(sanction.getID()+".enable", ((Mute) sanction).hisEnable());
+			config.set(sanction.getID()+".untilDate", ((Mute) sanction).getUntilDate() != null ?
 					((Mute) sanction).getUntilDate().getTimeInMillis() : 0);
 		}else if(sanction instanceof Warning) {
-			config.set(".type", "ban");
-			config.set(".sanctionerID", sanction.getSanctionerID());
-			config.set(".reason", sanction.getReason());
-			config.set(".date", sanction.getDate());
+			config.set(sanction.getID()+".type", "ban");
+			config.set(sanction.getID()+".sanctionerID", sanction.getSanctionerID());
+			config.set(sanction.getID()+".reason", sanction.getReason());
+			config.set(sanction.getID()+".date", sanction.getDate());
 		}
 		try {
 			config.save(file);
@@ -79,20 +80,31 @@ public class SanctionContainer {
 					Calendar untilDate = Calendar.getInstance();
 					untilDate.setTimeInMillis(config.getLong(path+".untilDate", 0));
 					if(untilDate.getTimeInMillis() == 0) untilDate = null;
-					sanctions.add(new Mute(playerID, sanctionerID, reason, UUID.fromString(path), date, untilDate));
+					boolean enable = config.getBoolean(path+".enable");
+					sanctions.add(new Mute(playerID, sanctionerID, reason, UUID.fromString(path), date, untilDate, enable));
 				}
 			}
 		}
 		return sanctions;
 	}
 
+	public boolean unmute(UUID playerID) {
+		Mute mute = checkMute(playerID);
+		if(mute != null) {
+			mute.setEnable(false);
+			return true;
+		}else return false;
+	}
+	
 	/*
 	 * checkBan
 	 */
 	public Ban checkBan(UUID playerID) {
 		if(Bukkit.getOfflinePlayer(playerID).isBanned()) {
 			for(Sanction s : getSanctions(playerID)) {
-				if(s instanceof Ban) return (Ban) s;
+				if(s instanceof Ban) {
+					return (Ban) s;
+				}
 			}
 			return null;
 		}else {
@@ -106,7 +118,7 @@ public class SanctionContainer {
 	public Mute checkMute(UUID playerID) {
 		for(Sanction s : getSanctions(playerID)) {
 			if(s instanceof Mute) {
-				if(((Mute) s).getUntilDate().after(Calendar.getInstance())) {
+				if(((Mute) s).isActive()) {
 					return (Mute) s;
 				}else return null;
 			}
@@ -124,9 +136,6 @@ public class SanctionContainer {
 			Bukkit.getBanList(Type.NAME).addBan(oPlayer.getName(), 
 				reason, untilDate != null ? untilDate.getTime() : null, bannerName);
 			saveSanction(new Ban(playerID, sanctionerID, reason, null, null, untilDate));
-			if(oPlayer.isOnline()) {
-				Bukkit.broadcastMessage("§1Ban §8| §r"+oPlayer.getName()+" banni par "+bannerName+" pour "+reason);
-			}
 			return true;
 		}else return false;
 	}
@@ -137,11 +146,7 @@ public class SanctionContainer {
 	public boolean applyMute(UUID playerID, @Nullable UUID sanctionerID, String reason, @Nullable Calendar untilDate) {
 		OfflinePlayer oPlayer = Bukkit.getOfflinePlayer(playerID);
 		if(oPlayer != null) {
-			String bannerName = sanctionerID == null ? "Console" : Bukkit.getOfflinePlayer(playerID).getName();
-			saveSanction(new Mute(playerID, sanctionerID, reason, null, null, untilDate));
-			if(oPlayer.isOnline()) {
-				Bukkit.broadcastMessage("§1Mute §8| §r"+oPlayer.getName()+" mute par "+bannerName+" pour "+reason);
-			}
+			saveSanction(new Mute(playerID, sanctionerID, reason, null, null, untilDate, true));
 			return true;
 		}else return false;
 	}
@@ -149,14 +154,10 @@ public class SanctionContainer {
 	/*
 	 * addWarn
 	 */
-	public boolean addWarn(UUID playerID, @Nullable UUID sanctionerID, String reason) {
+	public boolean applyWarn(UUID playerID, @Nullable UUID sanctionerID, String reason) {
 		OfflinePlayer oPlayer = Bukkit.getOfflinePlayer(playerID);
 		if(oPlayer != null) {
-			String bannerName = sanctionerID == null ? "Console" : Bukkit.getOfflinePlayer(playerID).getName();
 			saveSanction(new Warning(playerID, sanctionerID, reason, null, null));
-			if(oPlayer.isOnline()) {
-				Bukkit.broadcastMessage("§1Warn §8| §r"+oPlayer.getName()+" warn par "+bannerName+" pour "+reason);
-			}
 			return true;
 		}else return false;
 	}

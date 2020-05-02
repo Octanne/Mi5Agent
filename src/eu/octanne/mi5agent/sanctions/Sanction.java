@@ -5,6 +5,8 @@ import java.util.UUID;
 
 import javax.annotation.Nullable;
 
+import org.bukkit.Bukkit;
+
 public abstract class Sanction {
 	
 	private UUID playerID;
@@ -36,6 +38,10 @@ public abstract class Sanction {
 	
 	public UUID getSanctionerID() {
 		return sanctionerID;
+	}
+	
+	public String getSanctionerName() {
+		return sanctionerID != null ? Bukkit.getOfflinePlayer(sanctionerID).getName() : "Console";
 	}
 	
 	public UUID getID() {

@@ -22,4 +22,26 @@ public class Ban extends Sanction{
 		if(untilDate != null)return Calendar.getInstance().after(untilDate);
 		else return true;
 	}
+	
+	public String getUntilDateToString() {
+		String day = untilDate.get(Calendar.DAY_OF_MONTH)+"";
+		String month = untilDate.get(Calendar.MONTH)+"";
+		String year = untilDate.get(Calendar.YEAR)+"";
+		String hour = untilDate.get(Calendar.HOUR_OF_DAY)+"";
+		String minutes = untilDate.get(Calendar.MINUTE)+"";
+		String secondes = untilDate.get(Calendar.SECOND)+"";
+		StringBuilder date = new StringBuilder();
+		date.append(day);
+		date.append(" ");
+		date.append(month);
+		date.append(" ");
+		date.append(year);
+		date.append(" ");
+		date.append(hour);
+		date.append(" ");
+		date.append(minutes);
+		date.append(" ");
+		date.append(secondes);
+		return date.toString();
+	}
 }
