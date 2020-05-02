@@ -1,0 +1,24 @@
+main: eu.octanne.mi5agent.Mi5AgentBukkit
+authors: [Octanne]
+version: 1.0
+name: MI5-Agent
+description: Moderation Plugin with sanction history...
+commands:
+  tempban:
+    description: Tempory Ban a player.
+    aliases: [tban]
+  ban:
+    description: Finally Ban a player.
+  tempmute:
+    description: Tempory Mute a player.
+    aliases: [tmute]
+  mute:
+    description: Finally Mute a player.
+  unmute:
+    description: Unmute a player.
+  unban:
+    description: Unban a player.
+  warn:
+    description: Warn a player.
+  phistory:
+    description: Open menu history for a player.
