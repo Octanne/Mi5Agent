@@ -44,4 +44,27 @@ public class Ban extends Sanction{
 		date.append(secondes);
 		return date.toString();
 	}
+	
+	public String getUntilTime() {
+		Calendar now = Calendar.getInstance();
+		if(untilDate != null && now.before(untilDate)) {
+			long millis = untilDate.getTimeInMillis()-now.getTimeInMillis();
+			int sec = (int) (millis/1000);
+			int min = sec/60;
+			sec %= 60;
+			int hour = min/60;
+			min %= 60;
+			int day = hour/24;
+			hour %= 24;
+			int year = day/365;
+			day %= 365;
+			
+			// Add message
+			return "";
+		}else if(untilDate == null){
+			return "A vie";
+		}else {
+			return "Terminé";
+		}
+	}
 }
