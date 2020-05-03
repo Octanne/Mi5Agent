@@ -56,11 +56,26 @@ public class Ban extends Sanction{
 			min %= 60;
 			int day = hour/24;
 			hour %= 24;
-			int year = day/365;
-			day %= 365;
+			int month = day/30;
+			day %= 30;
+			int year = month/12;
+			month %= 12;
 			
-			// Add message
-			return "";
+			String format = "";
+			if(year != 0) {
+				format +="§c"+year+" §7an(s) ";
+			}if(month != 0) {
+				format +="§c"+month+" §7mois ";
+			}if(day != 0) {
+				format +="§c"+day+" §7jour(s) ";
+			}if(hour != 0) {
+				format +="§c"+year+" §7heure(s) ";
+			}if(min != 0){
+				format +="§c"+min+" §7minute(s) ";
+			}if(sec != 0) {
+				format +="§c"+sec+" §7sec(s) ";
+			}
+			return format.endsWith(" ") ? format.substring(0, format.length()-1) : format;
 		}else if(untilDate == null){
 			return "A vie";
 		}else {
