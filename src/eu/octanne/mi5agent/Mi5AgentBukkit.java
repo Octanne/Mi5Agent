@@ -12,6 +12,12 @@ import org.bukkit.event.player.AsyncPlayerPreLoginEvent.Result;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import eu.octanne.mi5agent.commands.BanCommand;
+import eu.octanne.mi5agent.commands.MuteCommand;
+import eu.octanne.mi5agent.commands.TBanCommand;
+import eu.octanne.mi5agent.commands.TMuteCommand;
+import eu.octanne.mi5agent.commands.UBanCommand;
+import eu.octanne.mi5agent.commands.UMuteCommand;
 import eu.octanne.mi5agent.sanctions.Ban;
 import eu.octanne.mi5agent.sanctions.Mute;
 
@@ -26,7 +32,12 @@ public class Mi5AgentBukkit extends JavaPlugin implements Listener{
 		container = new SanctionContainer();
 		
 		// Commands
-		
+		getCommand("tempban").setExecutor(new TBanCommand());
+		getCommand("ban").setExecutor(new BanCommand());
+		getCommand("tempmute").setExecutor(new TMuteCommand());
+		getCommand("mute").setExecutor(new MuteCommand());
+		getCommand("unmute").setExecutor(new UMuteCommand());
+		getCommand("unban").setExecutor(new UBanCommand());
 	}
 	
 	@Override
