@@ -63,7 +63,7 @@ public class SanctionContainer {
 		List<Sanction> sanctions = new ArrayList<>();
 		String[] paths = new String[config.getKeys(false).size()];
 		paths = config.getKeys(false).toArray(paths);
-		for(int i = paths.length; i > 0; i--) {
+		for(int i = paths.length-1; i > 0; i--) {
 			String path = paths[i];
 			String type = config.getString(path+".type", "null");
 			if(!type.equalsIgnoreCase("null")) {
@@ -153,7 +153,6 @@ public class SanctionContainer {
 		OfflinePlayer oPlayer = Bukkit.getOfflinePlayer(playerID);
 		if(oPlayer != null) {
 			Mute mute = new Mute(playerID, sanctionerID, reason, null, null, untilDate, true);
-			Mi5AgentBukkit.mutePlayers.put(playerID, mute);
 			saveSanction(mute);
 			return mute;
 		}else return null;

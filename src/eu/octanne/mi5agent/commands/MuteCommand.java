@@ -8,6 +8,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import eu.octanne.mi5agent.Mi5AgentBukkit;
+import eu.octanne.mi5agent.sanctions.Mute;
 
 public class MuteCommand implements CommandExecutor{
 	
@@ -24,8 +25,9 @@ public class MuteCommand implements CommandExecutor{
 							reason+=" "+args[i];
 						}
 						reason = reason.substring(1);
-						Mi5AgentBukkit.getContainer().applyMute(p.getUniqueId(), 
+						Mute mute = Mi5AgentBukkit.getContainer().applyMute(p.getUniqueId(), 
 								sender instanceof Player ? ((Player) sender).getUniqueId() : null, reason, null);
+						Mi5AgentBukkit.mutePlayers.put(p.getUniqueId(), mute);
 						sender.sendMessage(COMAND_TAG+"§9"+p.getName()+" §7viens d'être mute pour : §9"+reason);
 						if(p.isOnline()) {
 							sender.sendMessage(COMAND_TAG+"§7Vous venez d'être mute par §9"+sender.getName()+" §7pour : §9"+reason);

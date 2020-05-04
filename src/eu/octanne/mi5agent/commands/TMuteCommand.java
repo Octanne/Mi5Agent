@@ -49,6 +49,7 @@ public class TMuteCommand implements CommandExecutor{
 						} reason = reason.substring(1);
 						// Ban PART
 						Mute mute = Mi5AgentBukkit.getContainer().applyMute(p.getUniqueId(), sender instanceof Player ? ((Player) sender).getUniqueId() : null, reason, cal);
+						Mi5AgentBukkit.mutePlayers.put(p.getUniqueId(), mute);
 						sender.sendMessage(COMAND_TAG+"§9"+p.getName()+" §7viens d'être mute pour : §9"+reason+"§7, durée : "+mute.getUntilTime());
 						if(p.isOnline()) {
 							p.getPlayer().sendMessage(COMAND_TAG+"§7Vous venez d'être mute pour : §9"+reason+"§7, durée : "+mute.getUntilTime());
