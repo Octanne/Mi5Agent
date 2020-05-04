@@ -74,12 +74,12 @@ public class Mi5AgentBukkit extends JavaPlugin implements Listener{
 				String[] sDate = ban.getUntilDateToString().split(" ");
 				e.setKickMessage("\n§7Vous avez été banni :" 
 						+ "\n" +"par §c" + ban.getSanctionerName() + "\n" 
-						+"§7raison :\n"+ "§c" + ban.getReason() + "\n" 
+						+"§7motif :\n"+ "§c" + ban.getReason() + "\n" 
 						+ "§7Jusqu'au §c" + sDate[0]+"§8/§c"+sDate[1]+"§8/§c"+sDate[2]+" §c"+sDate[3]+"§8:§c"+sDate[4]+"§8:§c"+sDate[5]);
 			}else {
 				e.setKickMessage("\n§7Vous avez été banni :" 
 						+ "\n" +"par §c" + ban.getSanctionerName() + "\n" 
-						+"§7raison :\n" + "§c" + ban.getReason());
+						+"§7motif :\n" + "§c" + ban.getReason());
 			}
 		}else {
 			Mute mute = container.checkMute(e.getUniqueId());

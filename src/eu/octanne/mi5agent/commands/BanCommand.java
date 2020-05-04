@@ -30,7 +30,7 @@ public class BanCommand implements CommandExecutor{
 						if(p.isOnline()) {
 							p.getPlayer().kickPlayer("\n§7Vous avez été banni :" 
 									+ "\n" +"par §c" + sender.getName() + "\n" 
-									+"§7raison :\n" + "§c" + reason);
+									+"§7motif :\n" + "§c" + reason);
 						}
 						return true;
 					}
