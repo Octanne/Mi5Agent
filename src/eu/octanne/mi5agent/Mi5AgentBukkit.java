@@ -3,6 +3,7 @@ package eu.octanne.mi5agent;
 import java.util.HashMap;
 import java.util.UUID;
 
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -38,6 +39,8 @@ public class Mi5AgentBukkit extends JavaPlugin implements Listener{
 		getCommand("mute").setExecutor(new MuteCommand());
 		getCommand("unmute").setExecutor(new UMuteCommand());
 		getCommand("unban").setExecutor(new UBanCommand());
+		
+		Bukkit.getPluginManager().registerEvents(this, this);
 	}
 	
 	@Override
