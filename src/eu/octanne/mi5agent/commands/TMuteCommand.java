@@ -28,7 +28,7 @@ public class TMuteCommand implements CommandExecutor{
 						for(int iUS = 0; iUS < units.length; iUS++) {
 							int iUnit = args[1].indexOf(units[iUS]);
 							String number = "";
-							for(int i = iUnit-1; Character.isDigit(args[1].charAt(i)) && i > -1; i--) {
+							for(int i = iUnit-1; i > -1 && Character.isDigit(args[1].charAt(i)); i--) {
 								number = args[1].charAt(i)+number;
 							}
 							try {
@@ -39,8 +39,8 @@ public class TMuteCommand implements CommandExecutor{
 						}
 						Calendar cal = Calendar.getInstance();
 						cal.add(Calendar.YEAR, values[0]); cal.add(Calendar.MONTH, values[1]);
-						cal.add(Calendar.DAY_OF_YEAR, values[3]); cal.add(Calendar.HOUR_OF_DAY, values[0]);
-						cal.add(Calendar.MINUTE, values[0]); cal.add(Calendar.SECOND, values[0]);
+						cal.add(Calendar.DAY_OF_YEAR, values[2]); cal.add(Calendar.HOUR_OF_DAY, values[3]);
+						cal.add(Calendar.MINUTE, values[4]); cal.add(Calendar.SECOND, values[5]);
 						
 						//GET REASON
 						String reason = "";

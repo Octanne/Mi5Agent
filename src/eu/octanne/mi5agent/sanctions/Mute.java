@@ -25,8 +25,8 @@ public class Mute extends Sanction {
 	public boolean isActive() {
 		if(untilDate != null && enable)return Calendar.getInstance().after(untilDate);
 		else {
-			if(!enable)return false;
-			else return true;
+			if(enable)return true;
+			else return false;
 		}
 	}
 	

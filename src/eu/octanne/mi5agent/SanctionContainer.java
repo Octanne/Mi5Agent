@@ -42,7 +42,7 @@ public class SanctionContainer {
 			config.set(sanction.getID()+".untilDate", ((Mute) sanction).getUntilDate() != null ?
 					((Mute) sanction).getUntilDate().getTimeInMillis() : 0);
 		}else if(sanction instanceof Warning) {
-			config.set(sanction.getID()+".type", "ban");
+			config.set(sanction.getID()+".type", "warn");
 			config.set(sanction.getID()+".sanctionerID", sanction.getSanctionerID().toString());
 			config.set(sanction.getID()+".reason", sanction.getReason());
 			config.set(sanction.getID()+".date", sanction.getDate().getTimeInMillis());
