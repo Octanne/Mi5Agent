@@ -11,7 +11,7 @@ import eu.octanne.mi5agent.Mi5AgentBukkit;
 
 public class WarningCommand implements CommandExecutor{
 
-	String COMAND_TAG = "§cWarn §8|§r ";
+	String COMAND_TAG = "§6Warn §8|§r ";
 	
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
@@ -28,7 +28,7 @@ public class WarningCommand implements CommandExecutor{
 								sender instanceof Player ? ((Player) sender).getUniqueId() : null, reason);
 						sender.sendMessage(COMAND_TAG+"§9"+p.getName()+" §7viens d'être averti pour : §9"+reason);
 						if(p.isOnline()) {
-							sender.sendMessage(COMAND_TAG+"§7Vous venez d'être averti par §9"+sender.getName()+" §7raison : §9"+reason);
+							sender.sendMessage(COMAND_TAG+"§7Vous venez d'être averti par §9"+sender.getName()+" §7pour : §9"+reason);
 						}
 						return true;
 					}
