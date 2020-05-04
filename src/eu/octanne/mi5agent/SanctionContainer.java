@@ -92,6 +92,7 @@ public class SanctionContainer {
 		Mute mute = checkMute(playerID);
 		if(mute != null) {
 			mute.setEnable(false);
+			Mi5AgentBukkit.mutePlayers.remove(playerID);
 			saveSanction(mute);
 			return true;
 		}else return false;
