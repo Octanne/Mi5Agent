@@ -19,7 +19,7 @@ public class Ban extends Sanction{
 	}
 	
 	public boolean isActive() {
-		if(untilDate != null)return Calendar.getInstance().after(untilDate);
+		if(untilDate != null)return Calendar.getInstance().before(untilDate);
 		else return true;
 	}
 	

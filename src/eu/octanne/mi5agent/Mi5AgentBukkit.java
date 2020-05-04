@@ -68,18 +68,18 @@ public class Mi5AgentBukkit extends JavaPlugin implements Listener{
 	@EventHandler
 	public void onPlayerLogin(AsyncPlayerPreLoginEvent e) {
 		Ban ban = container.checkBan(e.getUniqueId());
-		if(ban != null) {
+		if(ban != null && ban.isActive()) {
 			e.setLoginResult(Result.KICK_BANNED);
 			if(ban.getUntilDate() != null) {
 				String[] sDate = ban.getUntilDateToString().split(" ");
 				e.setKickMessage("\n§7Vous avez été banni :" 
-						+ "\n" +"par §c" + ban.getSanctionerName() + "\n" 
-						+"§7motif :\n"+ "§c" + ban.getReason() + "\n" 
-						+ "§7Jusqu'au §c" + sDate[0]+"§8/§c"+sDate[1]+"§8/§c"+sDate[2]+" §c"+sDate[3]+"§8:§c"+sDate[4]+"§8:§c"+sDate[5]);
+						+ "\n" +"par §c" + ban.getSanctionerName() + "\n\n" 
+						+"§7MOTIF :\n"+ "§c" + ban.getReason() + "\n\n" 
+						+ "§7Jusqu'au : §c" + sDate[0]+"§8/§c"+sDate[1]+"§8/§c"+sDate[2]+" §c"+sDate[3]+"§8:§c"+sDate[4]+"§8:§c"+sDate[5]);
 			}else {
 				e.setKickMessage("\n§7Vous avez été banni :" 
-						+ "\n" +"par §c" + ban.getSanctionerName() + "\n" 
-						+"§7motif :\n" + "§c" + ban.getReason());
+						+ "\n" +"par §c" + ban.getSanctionerName() + "\n\n" 
+						+"§7MOTIF :\n" + "§c" + ban.getReason());
 			}
 		}else {
 			Mute mute = container.checkMute(e.getUniqueId());
