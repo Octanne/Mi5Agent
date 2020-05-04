@@ -93,7 +93,7 @@ public class Mi5AgentBukkit extends JavaPlugin implements Listener{
 		if(isMute(e.getPlayer())) {
 			Mute mute = mutePlayers.get(e.getPlayer().getUniqueId());
 			// Modify Message TODO
-			e.getPlayer().sendMessage("§cMute §8| §cTu as été mute pour §9"+mute.getReason()+"§c, durée : §9"+mute.getUntilTime());
+			e.getPlayer().sendMessage("§cMute §8| §7Tu as été mute pour §9"+mute.getReason()+"§7, durée : §9"+mute.getUntilTime());
 			e.setCancelled(true);
 		}
 	} 
