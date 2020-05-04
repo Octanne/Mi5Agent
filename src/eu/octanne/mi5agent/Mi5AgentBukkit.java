@@ -17,9 +17,9 @@ import eu.octanne.mi5agent.sanctions.Mute;
 
 public class Mi5AgentBukkit extends JavaPlugin implements Listener{
 	
-	private HashMap<UUID, Mute> mutePlayers = new HashMap<UUID, Mute>();
+	static private HashMap<UUID, Mute> mutePlayers = new HashMap<UUID, Mute>();
 	
-	private SanctionContainer container;
+	static private SanctionContainer container;
 	
 	@Override
 	public void onEnable() {
@@ -34,11 +34,11 @@ public class Mi5AgentBukkit extends JavaPlugin implements Listener{
 		
 	}
 	
-	public SanctionContainer getContainer() {
+	static public SanctionContainer getContainer() {
 		return container;
 	}
 	
-	public boolean isMute(Player p) {
+	static public boolean isMute(Player p) {
 		if(mutePlayers.containsKey(p.getUniqueId())) {
 			if(mutePlayers.get(p.getUniqueId()).isActive()) {
 				return true;
@@ -77,5 +77,5 @@ public class Mi5AgentBukkit extends JavaPlugin implements Listener{
 			e.getPlayer().sendMessage("§6Mute §8| §cTu as été mute pour §c"+mute.getReason());
 			e.setCancelled(true);
 		}
-	}
+	} 
 }

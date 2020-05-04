@@ -1,7 +1,7 @@
 main: eu.octanne.mi5agent.Mi5AgentBukkit
 authors: [Octanne]
 version: 1.0
-name: MI5-Agent
+name: Mi5-Agent
 description: Moderation Plugin with sanction history...
 commands:
   tempban:
