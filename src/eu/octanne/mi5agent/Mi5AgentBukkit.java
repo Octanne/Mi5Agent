@@ -40,6 +40,11 @@ public class Mi5AgentBukkit extends JavaPlugin implements Listener{
 		getCommand("unmute").setExecutor(new UMuteCommand());
 		getCommand("unban").setExecutor(new UBanCommand());
 		
+		for(Player p : Bukkit.getOnlinePlayers()) {
+			Mute mute = container.checkMute(p.getUniqueId());
+			if(mute != null) mutePlayers.put(p.getUniqueId(), mute);
+		}
+		
 		Bukkit.getPluginManager().registerEvents(this, this);
 	}
 	
