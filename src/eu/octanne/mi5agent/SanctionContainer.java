@@ -24,7 +24,7 @@ public class SanctionContainer {
 	String pathFolder = "plugins/Mi-5Agent/data/";
 
 	private void saveSanction(Sanction sanction) {
-		File file = new File(pathFolder+sanction.getID().toString()+".yml");
+		File file = new File(pathFolder+sanction.getPlayerID().toString()+".yml");
 		YamlConfiguration config = YamlConfiguration.loadConfiguration(file);
 		if(sanction instanceof Ban) {
 			config.set(sanction.getID()+".type", "ban");
