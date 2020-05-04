@@ -88,10 +88,11 @@ public class SanctionContainer {
 		return sanctions;
 	}
 
-	public boolean unmute(UUID playerID) {
+	public boolean unMute(UUID playerID) {
 		Mute mute = checkMute(playerID);
 		if(mute != null) {
 			mute.setEnable(false);
+			saveSanction(mute);
 			return true;
 		}else return false;
 	}

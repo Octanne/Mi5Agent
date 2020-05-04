@@ -11,12 +11,12 @@ import eu.octanne.mi5agent.Mi5AgentBukkit;
 
 public class BanCommand implements CommandExecutor{
 	
-	String COMAND_TAG = "§cBan §8|§r ";
+	String COMAND_TAG = "§4Ban §8|§r ";
 	
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 		if(sender.hasPermission("mi5-agent.commands.ban")) {
-			if(args.length > 2) {
+			if(args.length > 1) {
 				for(OfflinePlayer p : Bukkit.getOfflinePlayers()) {
 					if(p.getName().equalsIgnoreCase(args[0])) {
 						String reason = "";

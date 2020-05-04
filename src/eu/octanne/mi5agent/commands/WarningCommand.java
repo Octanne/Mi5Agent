@@ -16,7 +16,7 @@ public class WarningCommand implements CommandExecutor{
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 		if(sender.hasPermission("mi5-agent.commands.warn")) {
-			if(args.length > 2) {
+			if(args.length > 1) {
 				for(OfflinePlayer p : Bukkit.getOfflinePlayers()) {
 					if(p.getName().equalsIgnoreCase(args[0])) {
 						String reason = "";

@@ -11,12 +11,12 @@ import eu.octanne.mi5agent.Mi5AgentBukkit;
 
 public class MuteCommand implements CommandExecutor{
 	
-	String COMAND_TAG = "§cBan §8|§r ";
+	String COMAND_TAG = "§cMute §8|§r ";
 	
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 		if(sender.hasPermission("mi5-agent.commands.mute")) {
-			if(args.length > 2) {
+			if(args.length > 1) {
 				for(OfflinePlayer p : Bukkit.getOfflinePlayers()) {
 					if(p.getName().equalsIgnoreCase(args[0])) {
 						String reason = "";
@@ -36,7 +36,7 @@ public class MuteCommand implements CommandExecutor{
 				sender.sendMessage(COMAND_TAG+"§cErreur : §9"+args[0]+" §cn'est pas un joueur valide.");
 				return false;
 			}else {
-				sender.sendMessage(COMAND_TAG+"§cUsage : /ban <joueur> <raison>");
+				sender.sendMessage(COMAND_TAG+"§cUsage : /mute <joueur> <raison>");
 				return false;
 			}
 		}else {

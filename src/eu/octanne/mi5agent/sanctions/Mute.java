@@ -10,6 +10,8 @@ public class Mute extends Sanction {
 	
 	private boolean enable;
 	
+	
+	
 	public Mute(UUID playerID, @Nullable UUID sanctionerID, String reason, @Nullable UUID id, @Nullable Calendar date, @Nullable Calendar untilDate, boolean enable) {
 		super(playerID, sanctionerID, reason, id, date);
 		this.untilDate = untilDate;
