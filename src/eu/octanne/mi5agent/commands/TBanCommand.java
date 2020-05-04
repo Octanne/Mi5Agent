@@ -49,7 +49,7 @@ public class TBanCommand implements CommandExecutor{
 						} reason = reason.substring(1);
 						// Ban PART
 						Ban ban = Mi5AgentBukkit.getContainer().applyBan(p.getUniqueId(), sender instanceof Player ? ((Player) sender).getUniqueId() : null, reason, cal);
-						sender.sendMessage(COMAND_TAG+"§9"+p.getName()+" §7viens d'être banni pour : §9"+reason+" §8(durée : "+ban.getUntilTime()+"§7)");
+						sender.sendMessage(COMAND_TAG+"§9"+p.getName()+" §7viens d'être banni pour : §9"+reason+"§7, durée : "+ban.getUntilTime());
 						if(p.isOnline()) {
 							String[] sDate = ban.getUntilDateToString().split(" ");
 							p.getPlayer().kickPlayer("\n§8§lVous avez été Banni" + "\n" +"par §c§l" + ban.getSanctionerName() + "\n" +"§8§lPour §c§l" + ban.getReason() + "\n" 

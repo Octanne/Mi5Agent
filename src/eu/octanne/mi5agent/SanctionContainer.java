@@ -61,7 +61,10 @@ public class SanctionContainer {
 		File file = new File(pathFolder+playerID.toString()+".yml");
 		YamlConfiguration config = YamlConfiguration.loadConfiguration(file);
 		List<Sanction> sanctions = new ArrayList<>();
-		for(String path : config.getKeys(false)) {
+		String[] paths = new String[config.getKeys(false).size()];
+		paths = config.getKeys(false).toArray(paths);
+		for(int i = 0; i < paths.length; i++) {
+			String path = paths[i];
 			String type = config.getString(path+".type", "null");
 			if(!type.equalsIgnoreCase("null")) {
 				String strID = config.getString(path+".sanctionerID", null);
