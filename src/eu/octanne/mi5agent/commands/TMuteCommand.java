@@ -28,7 +28,7 @@ public class TMuteCommand implements CommandExecutor{
 						for(int iUS = 0; iUS < units.length; iUS++) {
 							int iUnit = args[1].indexOf(units[iUS]);
 							String number = "";
-							for(int i = iUnit-1; Character.isDigit(args[1].charAt(i)); i--) {
+							for(int i = iUnit-1; Character.isDigit(args[1].charAt(i)) && i > -1; i--) {
 								number = args[1].charAt(i)+number;
 							}
 							try {
