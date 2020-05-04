@@ -52,8 +52,10 @@ public class TBanCommand implements CommandExecutor{
 						sender.sendMessage(COMAND_TAG+"§9"+p.getName()+" §7viens d'être banni pour : §9"+reason+"§7, durée : "+ban.getUntilTime());
 						if(p.isOnline()) {
 							String[] sDate = ban.getUntilDateToString().split(" ");
-							p.getPlayer().kickPlayer("\n§8§lVous avez été Banni" + "\n" +"par §c§l" + ban.getSanctionerName() + "\n" +"§8§lPour §c§l" + ban.getReason() + "\n" 
-									+ "§8Jusqu'au §c" + sDate[0]+"§8/§c"+sDate[1]+"§8/§c"+sDate[2]+" §c"+sDate[3]+"§8:§c"+sDate[4]+"§8:§c"+sDate[5]);
+							p.getPlayer().kickPlayer("\n§7Vous avez été banni :" 
+									+ "\n" +"par §c" + ban.getSanctionerName() + "\n" 
+									+"§7raison :\n"+ "§c" + ban.getReason() + "\n" 
+									+ "§7Jusqu'au §c" + sDate[0]+"§8/§c"+sDate[1]+"§8/§c"+sDate[2]+" §c"+sDate[3]+"§8:§c"+sDate[4]+"§8:§c"+sDate[5]);
 						}
 						return true;
 					}
