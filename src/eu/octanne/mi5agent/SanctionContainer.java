@@ -130,37 +130,40 @@ public class SanctionContainer {
 	/*
 	 * applyBan
 	 */
-	public boolean applyBan(UUID playerID, @Nullable UUID sanctionerID, String reason, @Nullable Calendar untilDate) {
+	public Ban applyBan(UUID playerID, @Nullable UUID sanctionerID, String reason, @Nullable Calendar untilDate) {
 		OfflinePlayer oPlayer = Bukkit.getOfflinePlayer(playerID);
 		if(oPlayer != null) {
 			String bannerName = sanctionerID == null ? "Console" : Bukkit.getOfflinePlayer(playerID).getName();
 			Bukkit.getBanList(Type.NAME).addBan(oPlayer.getName(), 
 				reason, untilDate != null ? untilDate.getTime() : null, bannerName);
-			saveSanction(new Ban(playerID, sanctionerID, reason, null, null, untilDate));
-			return true;
-		}else return false;
+			Ban ban = new Ban(playerID, sanctionerID, reason, null, null, untilDate);
+			saveSanction(ban);
+			return ban;
+		}else return null;
 	}
 
 	/*
 	 * applyMute
 	 */
-	public boolean applyMute(UUID playerID, @Nullable UUID sanctionerID, String reason, @Nullable Calendar untilDate) {
+	public Mute applyMute(UUID playerID, @Nullable UUID sanctionerID, String reason, @Nullable Calendar untilDate) {
 		OfflinePlayer oPlayer = Bukkit.getOfflinePlayer(playerID);
 		if(oPlayer != null) {
-			saveSanction(new Mute(playerID, sanctionerID, reason, null, null, untilDate, true));
-			return true;
-		}else return false;
+			Mute mute = new Mute(playerID, sanctionerID, reason, null, null, untilDate, true);
+			saveSanction(mute);
+			return mute;
+		}else return null;
 	}
 	
 	/*
 	 * addWarn
 	 */
-	public boolean applyWarn(UUID playerID, @Nullable UUID sanctionerID, String reason) {
+	public Warning applyWarn(UUID playerID, @Nullable UUID sanctionerID, String reason) {
 		OfflinePlayer oPlayer = Bukkit.getOfflinePlayer(playerID);
 		if(oPlayer != null) {
-			saveSanction(new Warning(playerID, sanctionerID, reason, null, null));
-			return true;
-		}else return false;
+			Warning warn = new Warning(playerID, sanctionerID, reason, null, null);
+			saveSanction(warn);
+			return warn;
+		}else return null;
 	}
 	
 	/*
