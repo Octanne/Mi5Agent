@@ -23,7 +23,7 @@ import eu.octanne.mi5agent.sanctions.Mute;
 
 public class Mi5AgentBukkit extends JavaPlugin implements Listener{
 	
-	static private HashMap<UUID, Mute> mutePlayers = new HashMap<UUID, Mute>();
+	static public HashMap<UUID, Mute> mutePlayers = new HashMap<UUID, Mute>();
 	
 	static private SanctionContainer container;
 	

@@ -28,24 +28,24 @@ public class SanctionContainer {
 		YamlConfiguration config = YamlConfiguration.loadConfiguration(file);
 		if(sanction instanceof Ban) {
 			config.set(sanction.getID()+".type", "ban");
-			config.set(sanction.getID()+".sanctionerID", sanction.getSanctionerID());
+			config.set(sanction.getID()+".sanctionerID", sanction.getSanctionerID().toString());
 			config.set(sanction.getID()+".reason", sanction.getReason());
-			config.set(sanction.getID()+".date", sanction.getDate());
+			config.set(sanction.getID()+".date", sanction.getDate().getTimeInMillis());
 			config.set(sanction.getID()+".untilDate", ((Ban) sanction).getUntilDate() != null ?
 					((Ban) sanction).getUntilDate().getTimeInMillis() : 0);
 		}else if(sanction instanceof Mute) {
 			config.set(sanction.getID()+".type", "mute");
-			config.set(sanction.getID()+".sanctionerID", sanction.getSanctionerID());
+			config.set(sanction.getID()+".sanctionerID", sanction.getSanctionerID().toString());
 			config.set(sanction.getID()+".reason", sanction.getReason());
-			config.set(sanction.getID()+".date", sanction.getDate());
+			config.set(sanction.getID()+".date", sanction.getDate().getTimeInMillis());
 			config.set(sanction.getID()+".enable", ((Mute) sanction).hisEnable());
 			config.set(sanction.getID()+".untilDate", ((Mute) sanction).getUntilDate() != null ?
 					((Mute) sanction).getUntilDate().getTimeInMillis() : 0);
 		}else if(sanction instanceof Warning) {
 			config.set(sanction.getID()+".type", "ban");
-			config.set(sanction.getID()+".sanctionerID", sanction.getSanctionerID());
+			config.set(sanction.getID()+".sanctionerID", sanction.getSanctionerID().toString());
 			config.set(sanction.getID()+".reason", sanction.getReason());
-			config.set(sanction.getID()+".date", sanction.getDate());
+			config.set(sanction.getID()+".date", sanction.getDate().getTimeInMillis());
 		}
 		try {
 			config.save(file);
@@ -149,6 +149,7 @@ public class SanctionContainer {
 		OfflinePlayer oPlayer = Bukkit.getOfflinePlayer(playerID);
 		if(oPlayer != null) {
 			Mute mute = new Mute(playerID, sanctionerID, reason, null, null, untilDate, true);
+			Mi5AgentBukkit.mutePlayers.put(playerID, mute);
 			saveSanction(mute);
 			return mute;
 		}else return null;
