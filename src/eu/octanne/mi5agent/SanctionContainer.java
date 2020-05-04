@@ -63,7 +63,7 @@ public class SanctionContainer {
 		List<Sanction> sanctions = new ArrayList<>();
 		String[] paths = new String[config.getKeys(false).size()];
 		paths = config.getKeys(false).toArray(paths);
-		for(int i = 0; i < paths.length; i++) {
+		for(int i = paths.length; i > 0; i--) {
 			String path = paths[i];
 			String type = config.getString(path+".type", "null");
 			if(!type.equalsIgnoreCase("null")) {
