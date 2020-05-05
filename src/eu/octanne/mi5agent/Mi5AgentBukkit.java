@@ -162,7 +162,7 @@ public class Mi5AgentBukkit extends JavaPlugin implements Listener{
 						//Bukkit.getLogger().info("Relaunch CPSProfile : " + e.getPlayer().getName());
 						if(profile.getTotal() >= getConfig().getDouble("anti-cheat.cps", 18)) {
 							for(Player p : Bukkit.getOnlinePlayers()) {
-								if(p.hasPermission("mi5-agent.anti-cheat.warning"))p.sendMessage("§7[§cMi5-Agent§7] §cAttention §9"+e.getPlayer().getName()+" §csuspecter d'§eAuto-Click§c, "
+								if(p.hasPermission("mi5-agent.anti-cheat.warning"))p.sendMessage("§7[§cMi5-Agent§7] §cAttention §9"+e.getPlayer().getName()+" §c: §eAuto-Click§c, "
 										+ "§6CPS : §7(§e"+profile.getTotal()+"§8/§9"+profile.getAccurate()+"§7)");
 							}
 						}CPSProfile nProfile = new CPSProfile();
@@ -193,7 +193,7 @@ public class Mi5AgentBukkit extends JavaPlugin implements Listener{
 					//Bukkit.getLogger().info("Relaunch CPSProfile : " + e.getDamager().getName());
 					if(profile.getTotal() >= getConfig().getDouble("anti-cheat.cps", 18)) {
 						for(Player p : Bukkit.getOnlinePlayers()) {
-							if(p.hasPermission("mi5-agent.anti-cheat.warning"))p.sendMessage("§7[§cMi5-Agent§7] §cAttention §9"+e.getDamager().getName()+" §csuspecter d'§eAuto-Click§c, "
+							if(p.hasPermission("mi5-agent.anti-cheat.warning"))p.sendMessage("§7[§cMi5-Agent§7] §cAttention §9"+e.getDamager().getName()+" §c: §eAuto-Click§c, "
 									+ "§6CPS : §7(§e"+profile.getTotal()+"§8/§9"+profile.getAccurate()+"§7)");
 						}
 					}
@@ -216,7 +216,7 @@ public class Mi5AgentBukkit extends JavaPlugin implements Listener{
 			Bukkit.getLogger().info(e.getDamager().getName()+" Reach : "+distance);
 			if(distance > getConfig().getDouble("anti-cheat.reach", 3.1)) {
 				for(Player p : Bukkit.getOnlinePlayers()) {
-					if(p.hasPermission("mi5-agent.anti-cheat.warning"))p.sendMessage("§7[§cMi5-Agent§7] §cAttention §9"+e.getDamager().getName()+" suspecter de §9Reach§c, §6Distance §c: "
+					if(p.hasPermission("mi5-agent.anti-cheat.warning"))p.sendMessage("§7[§cMi5-Agent§7] §cAttention §9"+e.getDamager().getName()+" §c: §9Reach§c, §6Distance §c: "
 							+ distance);
 				}
 			}
