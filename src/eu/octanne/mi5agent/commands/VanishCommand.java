@@ -35,7 +35,7 @@ public class VanishCommand implements CommandExecutor {
 			if(sender.getName().equals(p.getName())) {
 				if(vanish.contains(p.getUniqueId())) {
 					for(Player ps : Bukkit.getOnlinePlayers()) {
-						if(!p.hasPermission("mi5-agent.commands.vanish")) {
+						if(!ps.hasPermission("mi5-agent.commands.vanish")) {
 							ps.showPlayer(p);
 						}
 					}
@@ -43,7 +43,7 @@ public class VanishCommand implements CommandExecutor {
 					sender.sendMessage(COMAND_TAG+"§7Vous n'êtes plus en vanish.");
 				}else {
 					for(Player ps : Bukkit.getOnlinePlayers()) {
-						if(!p.hasPermission("mi5-agent.commands.vanish")) {
+						if(!ps.hasPermission("mi5-agent.commands.vanish")) {
 							ps.hidePlayer(p);
 						}
 					}
@@ -54,21 +54,22 @@ public class VanishCommand implements CommandExecutor {
 			}else {
 				if(vanish.contains(p.getUniqueId())) {
 					for(Player ps : Bukkit.getOnlinePlayers()) {
-						if(!p.hasPermission("mi5-agent.commands.vanish")) {
+						if(!ps.hasPermission("mi5-agent.commands.vanish")) {
 							ps.showPlayer(p);
 						}
 					}
 					vanish.remove(p.getUniqueId());
-					sender.sendMessage(COMAND_TAG+"§9"+p.getName()+" §7n'est plus en vanish.");
+					sender.sendMessage(COMAND_TAG+"§9"+p.getName()+" §an'est plus en vanish.");
+					p.sendMessage(COMAND_TAG+"§aVous n'êtes plus en vanish.");
 				}else {
 					for(Player ps : Bukkit.getOnlinePlayers()) {
-						if(!p.hasPermission("mi5-agent.commands.vanish")) {
+						if(!ps.hasPermission("mi5-agent.commands.vanish")) {
 							ps.hidePlayer(p);
 						}
 					}
 					vanish.add(p.getUniqueId());
 					sender.sendMessage(COMAND_TAG+"§9"+p.getName()+" §aest désormais en vanish.");
-					sender.sendMessage(COMAND_TAG+"§aVous êtes désormais en vanish.");
+					p.sendMessage(COMAND_TAG+"§aVous êtes désormais en vanish.");
 				}
 				return true;
 			}
