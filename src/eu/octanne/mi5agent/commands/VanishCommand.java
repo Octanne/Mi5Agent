@@ -20,7 +20,7 @@ public class VanishCommand implements CommandExecutor {
 		if(sender.hasPermission("mi5-agent.commands.vanish")) {
 			Player p;
 			if(!(sender instanceof Player) && args.length < 1) {
-				sender.sendMessage(COMAND_TAG+"§cUsage : /vanish [joueur]");
+				sender.sendMessage(COMAND_TAG+"§cUsage : /vanish <joueur>");
 				return false;
 			}else {
 				p = (Player) sender;

@@ -24,3 +24,5 @@ commands:
     description: Open menu history for a player.
   vanish:
     description: Vanish command.
+  freeze:
+    description: Freeze command.
