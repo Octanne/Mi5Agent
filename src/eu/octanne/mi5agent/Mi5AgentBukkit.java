@@ -156,16 +156,21 @@ public class Mi5AgentBukkit extends JavaPlugin implements Listener{
 			if(e.getAction().equals(Action.LEFT_CLICK_AIR) || e.getAction().equals(Action.LEFT_CLICK_BLOCK)) {
 				if(cpsProfile.containsKey(e.getPlayer().getUniqueId())) {
 					CPSProfile profile = cpsProfile.get(e.getPlayer().getUniqueId());
+					Bukkit.getLogger().info("Update CPSProfile : " + e.getPlayer().getName());
 					if(profile.isEnd()) {
-						Bukkit.broadcast("§7[§cMi5-Agent§7] §cAttention §9"+e.getPlayer().getName()+" suspecter d'§9Auto-Click§c, §6CPS §c: "
-								+ "§eT§7:§9"+profile.getTotal()+" §eA§7:§9"+profile.getAccurate(),"mi5-agent.anti-cheat.warning");
-						CPSProfile nProfile = new CPSProfile();
+						Bukkit.getLogger().info("Relaunch CPSProfile : " + e.getPlayer().getName());
+						if(profile.getTotal() > 18) {
+							Bukkit.broadcast("§7[§cMi5-Agent§7] §cAttention §9"+e.getPlayer().getName()+" suspecter d'§9Auto-Click§c, §6CPS §c: "
+									+ "§eT§7:§9"+profile.getTotal()+" §eA§7:§9"+profile.getAccurate(),"mi5-agent.anti-cheat.warning");
+						}CPSProfile nProfile = new CPSProfile();
 						nProfile.addClick();
 						cpsProfile.put(e.getPlayer().getUniqueId(), nProfile);
 					}else {
+						Bukkit.getLogger().info("AddClick CPSProfile : " + e.getPlayer().getName());
 						profile.addClick();
 					}
 				}else {
+					Bukkit.getLogger().info("Create CPSProfile : " + e.getPlayer().getName());
 					CPSProfile profile = new CPSProfile();
 					profile.addClick();
 					cpsProfile.put(e.getPlayer().getUniqueId(), profile);
@@ -176,11 +181,13 @@ public class Mi5AgentBukkit extends JavaPlugin implements Listener{
 
 	@EventHandler
 	public void onAttackPlayer(EntityDamageByEntityEvent e) {
-		if(e.getDamager() instanceof Player && (((HumanEntity) e.getEntity()).getGameMode().equals(GameMode.SURVIVAL) 
-				|| ((HumanEntity) e.getEntity()).getGameMode().equals(GameMode.ADVENTURE))){
+		if(e.getDamager() instanceof Player && (((HumanEntity) e.getDamager()).getGameMode().equals(GameMode.SURVIVAL) 
+				|| ((HumanEntity) e.getDamager()).getGameMode().equals(GameMode.ADVENTURE))){
 			if(cpsProfile.containsKey(e.getDamager().getUniqueId())) {
 				CPSProfile profile = cpsProfile.get(e.getDamager().getUniqueId());
+				Bukkit.getLogger().info("Update CPSProfile : " + e.getDamager().getName());
 				if(profile.isEnd()) {
+					Bukkit.getLogger().info("Relaunch CPSProfile : " + e.getDamager().getName());
 					if(profile.getTotal() > 18) {
 						Bukkit.broadcast("§7[§cMi5-Agent§7] §cAttention §9"+e.getDamager().getName()+" suspecter d'§9Auto-Click§c, §6CPS §c: "
 								+ "§eT§7:§9"+profile.getTotal()+" §eA§7:§9"+profile.getAccurate(),"mi5-agent.anti-cheat.warning");
@@ -189,15 +196,17 @@ public class Mi5AgentBukkit extends JavaPlugin implements Listener{
 					nProfile.addAccurate();
 					cpsProfile.put(e.getDamager().getUniqueId(), nProfile);
 				}else {
+					Bukkit.getLogger().info("AddAccurate CPSProfile : " + e.getDamager().getName());
 					profile.addAccurate();
 				}
 			}else {
+				Bukkit.getLogger().info("Create CPSProfile : " + e.getDamager().getName());
 				CPSProfile profile = new CPSProfile();
 				profile.addAccurate();
 				cpsProfile.put(e.getDamager().getUniqueId(), profile);
 			}
 			double distance = e.getDamager().getLocation().distance(e.getEntity().getLocation());
-			if(distance > 3.5) {
+			if(distance > 3.1) {
 				Bukkit.broadcast("§7[§cMi5-Agent§7] §cAttention §9"+e.getDamager().getName()+" suspecter de §9Reach§c, §6Distance §c: "
 						+ distance,"mi5-agent.anti-cheat.warning");
 			}
