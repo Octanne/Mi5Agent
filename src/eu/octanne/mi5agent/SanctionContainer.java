@@ -21,7 +21,7 @@ import eu.octanne.mi5agent.sanctions.Warning;
 
 public class SanctionContainer {
 
-	String pathFolder = "plugins/Mi-5Agent/data/";
+	String pathFolder = "plugins/Mi5-Agent/data/";
 
 	private void saveSanction(Sanction sanction) {
 		File file = new File(pathFolder+sanction.getPlayerID().toString()+".yml");
