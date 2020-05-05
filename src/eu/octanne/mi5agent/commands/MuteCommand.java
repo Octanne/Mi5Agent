@@ -30,7 +30,7 @@ public class MuteCommand implements CommandExecutor{
 						Mi5AgentBukkit.mutePlayers.put(p.getUniqueId(), mute);
 						sender.sendMessage(COMAND_TAG+"§9"+p.getName()+" §7viens d'être mute pour : §9"+reason);
 						if(p.isOnline()) {
-							sender.sendMessage(COMAND_TAG+"§7Vous venez d'être mute par §9"+sender.getName()+" §7pour : §9"+reason);
+							p.getPlayer().sendMessage(COMAND_TAG+"§7Vous venez d'être mute par §9"+sender.getName()+" §7pour : §9"+reason);
 						}
 						return true;
 					}

@@ -136,6 +136,7 @@ public class Mi5AgentBukkit extends JavaPlugin implements Listener{
 		private Calendar endTime;
 
 		private int accurateCount = 0;
+		private int criticalCount = 0;
 		private int totalCount = 0;
 
 		public CPSProfile() {
@@ -147,6 +148,10 @@ public class Mi5AgentBukkit extends JavaPlugin implements Listener{
 			return accurateCount/3;
 		}
 
+		public int getCritical() {
+			return criticalCount/3;
+		}
+		
 		public int getTotal() {
 			return totalCount/3;
 		}
@@ -155,6 +160,12 @@ public class Mi5AgentBukkit extends JavaPlugin implements Listener{
 			totalCount++;
 		}
 
+		public void addCritical() {
+			totalCount++;
+			accurateCount++;
+			criticalCount++;
+		}
+		
 		public void addAccurate() {
 			totalCount++;
 			accurateCount++;
@@ -177,7 +188,7 @@ public class Mi5AgentBukkit extends JavaPlugin implements Listener{
 						if(profile.getTotal() >= getConfig().getDouble("anti-cheat.cps", 18)) {
 							for(Player p : Bukkit.getOnlinePlayers()) {
 								if(p.hasPermission("mi5-agent.anti-cheat.warning"))p.sendMessage("§7[§cMi5-Agent§7] §cAttention §9"+e.getPlayer().getName()+" §c: §eAuto-Click§c, "
-										+ "§6CPS : §7(§e"+profile.getTotal()+"§8/§9"+profile.getAccurate()+"§7)");
+										+ "§6CPS : §7(§e"+profile.getTotal()+"§8/§9"+profile.getAccurate()+"§8:§c"+profile.getCritical()+"§7)");
 							}
 						}CPSProfile nProfile = new CPSProfile();
 						nProfile.addClick();
@@ -198,24 +209,32 @@ public class Mi5AgentBukkit extends JavaPlugin implements Listener{
 	public void onPlayerQuit(PlayerQuitEvent e) {
 		VanishCommand.vanish.remove(e.getPlayer().getUniqueId());
 		FreezeCommand.freeze.remove(e.getPlayer().getUniqueId());
+		//e.getPlayer().setWalkSpeed(0.3f);
 	}
 	
 	@EventHandler
 	public void onPlayerKick(PlayerKickEvent e) {
 		VanishCommand.vanish.remove(e.getPlayer().getUniqueId());
 		FreezeCommand.freeze.remove(e.getPlayer().getUniqueId());
+		//e.getPlayer().setWalkSpeed(0.3f);
 	}
 	
 	@EventHandler
 	public void onPlayerMove(PlayerMoveEvent e) {
-		if(FreezeCommand.freeze.contains(e.getPlayer().getUniqueId()))e.setCancelled(true);
+		if(e.getTo().getY() != e.getFrom().getY() || e.getTo().getBlockX() != e.getFrom().getBlockX()
+				|| e.getTo().getBlockZ() != e.getFrom().getBlockZ()) {
+			if(FreezeCommand.freeze.contains(e.getPlayer().getUniqueId()))e.setTo(e.getFrom());;
+		}
 	}
 	
 	@EventHandler
-	public void onPlayerProcessCommand(PlayerCommandPreprocessEvent e) {
-		if(FreezeCommand.freeze.contains(e.getPlayer().getUniqueId()) && 
-				(e.getMessage().startsWith("msg") || e.getMessage().startsWith("tell") 
-						|| e.getMessage().startsWith("r")))e.setCancelled(true);
+	public void onPlayerCommand(PlayerCommandPreprocessEvent e) {
+		if(FreezeCommand.freeze.contains(e.getPlayer().getUniqueId())){
+			if(!e.getMessage().toLowerCase().startsWith("/msg") && !e.getMessage().toLowerCase().startsWith("/tell") 
+					&& !e.getMessage().toLowerCase().startsWith("/r") && !e.getMessage().toLowerCase().startsWith("/freeze")) {
+						e.setCancelled(true);
+			}
+		}
 	}
 
 	@EventHandler
@@ -228,7 +247,7 @@ public class Mi5AgentBukkit extends JavaPlugin implements Listener{
 					if(profile.getTotal() >= getConfig().getDouble("anti-cheat.cps", 16)) {
 						for(Player p : Bukkit.getOnlinePlayers()) {
 							if(p.hasPermission("mi5-agent.anti-cheat.warning"))p.sendMessage("§7[§cMi5-Agent§7] §cAttention §9"+e.getDamager().getName()+" §c: §eAuto-Click§c, "
-									+ "§6CPS : §7(§e"+profile.getTotal()+"§8/§9"+profile.getAccurate()+"§7)");
+									+ "§6CPS : §7(§e"+profile.getTotal()+"§8/§9"+profile.getAccurate()+"§8:§c"+profile.getCritical()+"§7)");
 						}
 					}
 					CPSProfile nProfile = new CPSProfile();

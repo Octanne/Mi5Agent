@@ -28,7 +28,7 @@ public class WarningCommand implements CommandExecutor{
 								sender instanceof Player ? ((Player) sender).getUniqueId() : null, reason);
 						sender.sendMessage(COMAND_TAG+"§9"+p.getName()+" §7viens d'être averti pour : §9"+reason);
 						if(p.isOnline()) {
-							sender.sendMessage(COMAND_TAG+"§7Vous venez d'être averti par §9"+sender.getName()+" §7pour : §9"+reason);
+							p.getPlayer().sendMessage(COMAND_TAG+"§7Vous venez d'être averti par §9"+sender.getName()+" §7pour : §9"+reason);
 						}
 						return true;
 					}

@@ -27,9 +27,11 @@ public class FreezeCommand implements CommandExecutor{
 						sender.sendMessage(COMAND_TAG+"§9"+p.getName()+" §aest désormais freeze.");
 						p.sendMessage(COMAND_TAG+Mi5AgentBukkit.instance.getConfig().getString("freeze-message", "null").replace("{MODO}", sender.getName()));
 						p.teleport(p.getWorld().getSpawnLocation());
+						//p.setWalkSpeed(0f);
 						freeze.add(p.getUniqueId());
 					}else {
 						sender.sendMessage(COMAND_TAG+"§9"+p.getName()+" §an'est plus freeze.");
+						//p.setWalkSpeed(0.3f);
 						p.sendMessage(COMAND_TAG+"§7Vous n'êtes désormais plus freeze.");
 						freeze.remove(p.getUniqueId());
 					}
