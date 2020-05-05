@@ -29,7 +29,7 @@ public class BanCommand implements CommandExecutor{
 						sender.sendMessage(COMAND_TAG+"§9"+p.getName()+" §7viens d'être banni pour : §9"+reason);
 						if(p.isOnline()) {
 							p.getPlayer().kickPlayer("\n§7Vous avez été banni :" 
-									+ "\n" +"par §c" + sender.getName() + "\n\n" 
+									+ "\n\n" +"par §c" + sender.getName() + "\n\n" 
 									+"§7MOTIF :\n" + "§c" + reason);
 						}
 						return true;
