@@ -1,6 +1,5 @@
 package eu.octanne.mi5agent;
 
-import java.io.File;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.UUID;
