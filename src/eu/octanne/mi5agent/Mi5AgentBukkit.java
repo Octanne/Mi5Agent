@@ -1,5 +1,6 @@
 package eu.octanne.mi5agent;
 
+import java.text.DecimalFormat;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.UUID;
@@ -36,11 +37,13 @@ public class Mi5AgentBukkit extends JavaPlugin implements Listener{
 
 	static private SanctionContainer container;
 
+	static DecimalFormat df = new DecimalFormat("#.###");
+	
 	@Override
 	public void onEnable() {
 		//Load Para
-		if(!getConfig().isSet("anti-cheat.reach"))getConfig().set("anti-cheat.reach", 4.4);
-		if(!getConfig().isSet("anti-cheat.cps"))getConfig().set("anti-cheat.cps", 18);
+		if(!getConfig().isSet("anti-cheat.reach"))getConfig().set("anti-cheat.reach", 5);
+		if(!getConfig().isSet("anti-cheat.cps"))getConfig().set("anti-cheat.cps", 16);
 		saveConfig();
 		
 		container = new SanctionContainer();
@@ -185,7 +188,7 @@ public class Mi5AgentBukkit extends JavaPlugin implements Listener{
 			if(cpsProfile.containsKey(e.getDamager().getUniqueId())) {
 				CPSProfile profile = cpsProfile.get(e.getDamager().getUniqueId());
 				if(profile.isEnd()) {
-					if(profile.getTotal() >= getConfig().getDouble("anti-cheat.cps", 18)) {
+					if(profile.getTotal() >= getConfig().getDouble("anti-cheat.cps", 16)) {
 						for(Player p : Bukkit.getOnlinePlayers()) {
 							if(p.hasPermission("mi5-agent.anti-cheat.warning"))p.sendMessage("§7[§cMi5-Agent§7] §cAttention §9"+e.getDamager().getName()+" §c: §eAuto-Click§c, "
 									+ "§6CPS : §7(§e"+profile.getTotal()+"§8/§9"+profile.getAccurate()+"§7)");
@@ -206,10 +209,10 @@ public class Mi5AgentBukkit extends JavaPlugin implements Listener{
 			//Reach
 			double distance = e.getDamager().getLocation().distance(e.getEntity().getLocation());
 			//Bukkit.getLogger().info(e.getDamager().getName()+" Reach : "+distance);
-			if(distance > getConfig().getDouble("anti-cheat.reach", 4.4)) {
+			if(distance > getConfig().getDouble("anti-cheat.reach", 5)) {
 				for(Player p : Bukkit.getOnlinePlayers()) {
 					if(p.hasPermission("mi5-agent.anti-cheat.warning"))p.sendMessage("§7[§cMi5-Agent§7] §cAttention §9"+e.getDamager().getName()+" §c: §9Reach§c, §6Distance §c: "
-							+ distance);
+							+ df.format(distance));
 				}
 			}
 		}
