@@ -39,6 +39,7 @@ public class VanishCommand implements CommandExecutor {
 							ps.showPlayer(p);
 						}
 					}
+					vanish.remove(p.getUniqueId());
 					sender.sendMessage(COMAND_TAG+"§7Vous n'êtes plus en vanish.");
 				}else {
 					for(Player ps : Bukkit.getOnlinePlayers()) {
@@ -46,6 +47,7 @@ public class VanishCommand implements CommandExecutor {
 							ps.hidePlayer(p);
 						}
 					}
+					vanish.add(p.getUniqueId());
 					sender.sendMessage(COMAND_TAG+"§aVous êtes désormais en vanish.");
 				}
 				return true;
@@ -56,6 +58,7 @@ public class VanishCommand implements CommandExecutor {
 							ps.showPlayer(p);
 						}
 					}
+					vanish.remove(p.getUniqueId());
 					sender.sendMessage(COMAND_TAG+"§9"+p.getName()+" §7n'est plus en vanish.");
 				}else {
 					for(Player ps : Bukkit.getOnlinePlayers()) {
@@ -63,6 +66,7 @@ public class VanishCommand implements CommandExecutor {
 							ps.hidePlayer(p);
 						}
 					}
+					vanish.add(p.getUniqueId());
 					sender.sendMessage(COMAND_TAG+"§9"+p.getName()+" §aest désormais en vanish.");
 					sender.sendMessage(COMAND_TAG+"§aVous êtes désormais en vanish.");
 				}
