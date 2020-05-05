@@ -39,7 +39,7 @@ public class Mi5AgentBukkit extends JavaPlugin implements Listener{
 	@Override
 	public void onEnable() {
 		//Load Para
-		if(!getConfig().isSet("anti-cheat.reach"))getConfig().set("anti-cheat.reach", 3.1);
+		if(!getConfig().isSet("anti-cheat.reach"))getConfig().set("anti-cheat.reach", 4.4);
 		if(!getConfig().isSet("anti-cheat.cps"))getConfig().set("anti-cheat.cps", 18);
 		saveConfig();
 		
@@ -124,15 +124,15 @@ public class Mi5AgentBukkit extends JavaPlugin implements Listener{
 
 		public CPSProfile() {
 			this.endTime = Calendar.getInstance();
-			endTime.add(Calendar.SECOND, 10); // TODO
+			endTime.add(Calendar.SECOND, 3);
 		}
 
 		public int getAccurate() {
-			return accurateCount/2;
+			return accurateCount/3;
 		}
 
 		public int getTotal() {
-			return totalCount/2;
+			return totalCount/3;
 		}
 
 		public void addClick() {
@@ -205,8 +205,8 @@ public class Mi5AgentBukkit extends JavaPlugin implements Listener{
 			
 			//Reach
 			double distance = e.getDamager().getLocation().distance(e.getEntity().getLocation());
-			Bukkit.getLogger().info(e.getDamager().getName()+" Reach : "+distance);
-			if(distance > getConfig().getDouble("anti-cheat.reach", 3.1)) {
+			//Bukkit.getLogger().info(e.getDamager().getName()+" Reach : "+distance);
+			if(distance > getConfig().getDouble("anti-cheat.reach", 4.4)) {
 				for(Player p : Bukkit.getOnlinePlayers()) {
 					if(p.hasPermission("mi5-agent.anti-cheat.warning"))p.sendMessage("§7[§cMi5-Agent§7] §cAttention §9"+e.getDamager().getName()+" §c: §9Reach§c, §6Distance §c: "
 							+ distance);
