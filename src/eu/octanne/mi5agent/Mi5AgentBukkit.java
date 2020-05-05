@@ -221,11 +221,6 @@ public class Mi5AgentBukkit extends JavaPlugin implements Listener{
 	
 	@EventHandler
 	public void onPlayerMove(PlayerMoveEvent e) {
-		if(!e.getPlayer().getAllowFlight() && e.getPlayer().isFlying()) {
-			for(Player p : Bukkit.getOnlinePlayers()) {
-				if(p.hasPermission("mi5-agent.anti-cheat.warning"))p.sendMessage("§7[§cMi5-Agent§7] §cAttention §9"+e.getPlayer().getName()+" §c: §9Flying§c.");
-			}
-		}
 		if(e.getTo().getY() != e.getFrom().getY() || e.getTo().getBlockX() != e.getFrom().getBlockX()
 				|| e.getTo().getBlockZ() != e.getFrom().getBlockZ()) {
 			if(FreezeCommand.freeze.contains(e.getPlayer().getUniqueId()))e.setTo(e.getFrom());;
