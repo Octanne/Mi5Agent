@@ -43,12 +43,14 @@ public class Mi5AgentBukkit extends JavaPlugin implements Listener{
 
 	static private SanctionContainer container;
 
-	static public Plugin instance = Bukkit.getPluginManager().getPlugin("Mi5-Agent");
+	static public Plugin instance;
 	
 	static DecimalFormat df = new DecimalFormat("#.###");
 	
 	@Override
 	public void onEnable() {
+		instance = Bukkit.getPluginManager().getPlugin("Mi5-Agent");
+		
 		//Load Para
 		if(!getConfig().isSet("anti-cheat.reach"))getConfig().set("anti-cheat.reach", 5);
 		if(!getConfig().isSet("anti-cheat.cps"))getConfig().set("anti-cheat.cps", 16);
