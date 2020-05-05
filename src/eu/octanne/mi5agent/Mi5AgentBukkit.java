@@ -117,15 +117,13 @@ public class Mi5AgentBukkit extends JavaPlugin implements Listener{
 	}
 
 	public class CPSProfile {
-		private Calendar startTime;
 		private Calendar endTime;
 
 		private int accurateCount = 0;
 		private int totalCount = 0;
 
 		public CPSProfile() {
-			this.startTime = Calendar.getInstance();
-			this.endTime = (Calendar) startTime.clone();
+			this.endTime = Calendar.getInstance();
 			endTime.add(Calendar.SECOND, 2);
 		}
 
@@ -162,14 +160,14 @@ public class Mi5AgentBukkit extends JavaPlugin implements Listener{
 					Bukkit.getLogger().info("Update CPSProfile : " + e.getPlayer().getName());
 					if(profile.isEnd()) {
 						Bukkit.getLogger().info("Relaunch CPSProfile : " + e.getPlayer().getName());
-						if(profile.getTotal() > getConfig().getDouble("anti-cheat.cps", 18)) {
+						if(profile.getTotal() >= getConfig().getDouble("anti-cheat.cps", 18)) {
 							Bukkit.broadcast("§7[§cMi5-Agent§7] §cAttention §9"+e.getPlayer().getName()+" suspecter d'§9Auto-Click§c, §6CPS §c: "
 									+ "§eT§7:§9"+profile.getTotal()+" §eA§7:§9"+profile.getAccurate(),"mi5-agent.anti-cheat.warning");
 						}CPSProfile nProfile = new CPSProfile();
 						nProfile.addClick();
 						cpsProfile.put(e.getPlayer().getUniqueId(), nProfile);
 					}else {
-						Bukkit.getLogger().info("AddClick CPSProfile : " + e.getPlayer().getName());
+						Bukkit.getLogger().info("AddClick CPSProfile : " + e.getPlayer().getName() + " Click : "+profile.getTotal());
 						profile.addClick();
 					}
 				}else {
@@ -191,7 +189,7 @@ public class Mi5AgentBukkit extends JavaPlugin implements Listener{
 				Bukkit.getLogger().info("Update CPSProfile : " + e.getDamager().getName());
 				if(profile.isEnd()) {
 					Bukkit.getLogger().info("Relaunch CPSProfile : " + e.getDamager().getName());
-					if(profile.getTotal() > getConfig().getDouble("anti-cheat.cps", 18)) {
+					if(profile.getTotal() >= getConfig().getDouble("anti-cheat.cps", 18)) {
 						Bukkit.broadcast("§7[§cMi5-Agent§7] §cAttention §9"+e.getDamager().getName()+" suspecter d'§9Auto-Click§c, §6CPS §c: "
 								+ "§eT§7:§9"+profile.getTotal()+" §eA§7:§9"+profile.getAccurate(),"mi5-agent.anti-cheat.warning");
 					}
@@ -199,7 +197,7 @@ public class Mi5AgentBukkit extends JavaPlugin implements Listener{
 					nProfile.addAccurate();
 					cpsProfile.put(e.getDamager().getUniqueId(), nProfile);
 				}else {
-					Bukkit.getLogger().info("AddAccurate CPSProfile : " + e.getDamager().getName());
+					Bukkit.getLogger().info("AddAccurate CPSProfile : " + e.getDamager().getName() + " Click : "+profile.getTotal());
 					profile.addAccurate();
 				}
 			}else {
@@ -212,6 +210,7 @@ public class Mi5AgentBukkit extends JavaPlugin implements Listener{
 			//Reach
 			double distance = e.getDamager().getLocation().distance(e.getEntity().getLocation());
 			if(distance > getConfig().getDouble("anti-cheat.reach", 3.1)) {
+				Bukkit.getLogger().info(e.getDamager().getName()+" Reach : "+distance);
 				Bukkit.broadcast("§7[§cMi5-Agent§7] §cAttention §9"+e.getDamager().getName()+" suspecter de §9Reach§c, §6Distance §c: "
 						+ distance,"mi5-agent.anti-cheat.warning");
 			}
