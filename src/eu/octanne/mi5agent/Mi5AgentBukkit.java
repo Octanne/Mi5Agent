@@ -17,6 +17,7 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent.Result;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerKickEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -179,6 +180,16 @@ public class Mi5AgentBukkit extends JavaPlugin implements Listener{
 				}
 			}
 		}
+	}
+	
+	@EventHandler
+	public void onPlayerQuit(PlayerQuitEvent e) {
+		
+	}
+	
+	@EventHandler
+	public void onPlayerKick(PlayerKickEvent e) {
+		
 	}
 
 	@EventHandler
