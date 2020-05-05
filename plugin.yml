@@ -22,3 +22,5 @@ commands:
     description: Warn a player.
   phistory:
     description: Open menu history for a player.
+  vanish:
+    description: Vanish command.
