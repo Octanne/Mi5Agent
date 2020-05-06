@@ -28,3 +28,10 @@ commands:
     description: Freeze command.
   kick:
     description: Kick command.
+  invsee:
+    description: Invsee command.
+  enderchest:
+    description: enderchest command.
+    aliases: [ec]
+  ping:
+    description: PING command.

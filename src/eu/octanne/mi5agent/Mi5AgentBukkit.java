@@ -26,10 +26,13 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import eu.octanne.mi5agent.commands.BanCommand;
+import eu.octanne.mi5agent.commands.EnderChestCommand;
 import eu.octanne.mi5agent.commands.FreezeCommand;
+import eu.octanne.mi5agent.commands.InvseeCommand;
 import eu.octanne.mi5agent.commands.KickCommand;
 import eu.octanne.mi5agent.commands.MuteCommand;
 import eu.octanne.mi5agent.commands.PHistoryCommand;
+import eu.octanne.mi5agent.commands.PingCommand;
 import eu.octanne.mi5agent.commands.TBanCommand;
 import eu.octanne.mi5agent.commands.TMuteCommand;
 import eu.octanne.mi5agent.commands.UBanCommand;
@@ -75,6 +78,9 @@ public class Mi5AgentBukkit extends JavaPlugin implements Listener{
 		getCommand("freeze").setExecutor(new FreezeCommand());
 		getCommand("warn").setExecutor(new WarningCommand());
 		getCommand("kick").setExecutor(new KickCommand());
+		getCommand("ping").setExecutor(new PingCommand());
+		getCommand("enderchest").setExecutor(new EnderChestCommand());
+		getCommand("invsee").setExecutor(new InvseeCommand());
 		
 		for(Player p : Bukkit.getOnlinePlayers()) {
 			Mute mute = container.checkMute(p.getUniqueId());
