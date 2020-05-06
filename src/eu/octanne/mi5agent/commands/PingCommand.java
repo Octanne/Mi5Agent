@@ -26,7 +26,7 @@ public class PingCommand implements CommandExecutor {
 				sender.sendMessage(COMAND_TAG+"§cUsage : /ping <joueur>");
 				return false;
 			}
-			sender.sendMessage(COMAND_TAG+"§7 Le ping de §9"+p.getName()+" est de §9"+((CraftPlayer) p).getHandle().ping+"§ams.");
+			sender.sendMessage(COMAND_TAG+"§7Le ping de §9"+p.getName()+" §7est de §9"+((CraftPlayer) p).getHandle().ping+"§cms§7.");
 			return true;
 		}else {
 			sender.sendMessage("§cErreur §8| §cCommande reservée à l'administration.");

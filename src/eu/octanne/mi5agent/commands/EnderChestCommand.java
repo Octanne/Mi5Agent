@@ -23,7 +23,7 @@ public class EnderChestCommand implements CommandExecutor{
 					}
 				}else p = (Player) sender;
 				((Player) sender).openInventory(p.getEnderChest());
-				sender.sendMessage(COMAND_TAG+"§a Ouverture de l'enderchest de §9"+p.getName()+"§a.");
+				sender.sendMessage(COMAND_TAG+"§aOuverture de l'enderchest de §9"+p.getName()+"§a.");
 				return true;
 			}else {
 				sender.sendMessage("§cErreur §8| §cCommande reservée à l'administration.");

@@ -18,7 +18,7 @@ public class InvseeCommand implements CommandExecutor{
 					Player p = Bukkit.getPlayer(args[0]);
 					if(p != null) {
 						((Player) sender).openInventory(p.getInventory());
-						sender.sendMessage(COMAND_TAG+"§a Ouverture de l'inventaire de §9"+p.getName()+"§a.");
+						sender.sendMessage(COMAND_TAG+"§aOuverture de l'inventaire de §9"+p.getName()+"§a.");
 						return true;
 					}else {
 						sender.sendMessage(COMAND_TAG+"§cErreur : §9"+args[0]+" §cn'est pas un joueur valide.");

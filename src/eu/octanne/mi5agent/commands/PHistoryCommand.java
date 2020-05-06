@@ -40,7 +40,7 @@ public class PHistoryCommand implements CommandExecutor, Listener{
 				if(args.length > 0) {
 					for(OfflinePlayer p : Bukkit.getOfflinePlayers()) {
 						if(p.getName().equalsIgnoreCase(args[0])) {
-							openViewer((Player) sender, 1);
+							openViewer((Player) sender, 1, p);
 							return true;
 						}
 					}
@@ -60,7 +60,7 @@ public class PHistoryCommand implements CommandExecutor, Listener{
 		}
 	}
 
-	private void openViewer(Player p, int page) {
+	private void openViewer(Player p, int page, OfflinePlayer otherP) {
 		// Update
 		if(viewers.containsKey(p.getUniqueId())) {
 			SanctionViewer view = viewers.get(p.getUniqueId());
@@ -68,23 +68,26 @@ public class PHistoryCommand implements CommandExecutor, Listener{
 			for(int i = 9; i < view.sanctions.size() && i < 27; i++) {
 				view.inv.clear(i);
 			}
-			for(int i = 9*page; i < view.sanctions.size() && i < 27; i++) {
-				Sanction san = view.sanctions.get(i-9);
+			for(int i = 9; i < view.sanctions.size() && i < 27; i++) {
+				Sanction san = view.sanctions.get((i-9)*page);
+				String sanTypeTab[] = san.getClass().getCanonicalName().split(".");
+				String name = sanTypeTab[sanTypeTab.length-1];
 				ArrayList<String> loreSAN = new ArrayList<>();
-				loreSAN.add("§7Par : §9"+san.getSanctionerName());
-				loreSAN.add("§7Date : §b"+san.getDateToString());
-				if(san instanceof Mute)loreSAN.add("§7Actif : §9"+((Mute) san).hisEnable());
-				if(san instanceof Mute)loreSAN.add("§7Durée : §b"+((Mute) san).getUntilTime());
-				if(san instanceof Ban) loreSAN.add("§7Durée : §b"+((Ban) san).getUntilTime());
-				loreSAN.add("§7Motif : §c"+san.getID());
-				loreSAN.add("§7ID : §a"+san.getID());
-				view.inv.setItem(i, Utils.createItemStack(san.getClass().getName(), Material.PAPER, 1, loreSAN, 1, false));
+				loreSAN.add("§7Motif : §c"+san.getReason());
+				if(san instanceof Mute)loreSAN.add("§7Actif : §a"+((Mute) san).hisEnable());
+				if(san instanceof Mute)loreSAN.add("§7Durée : §9"+((Mute) san).getUntilTime());
+				if(san instanceof Ban) loreSAN.add("§7Durée : §9"+((Ban) san).getUntilTime());
+				loreSAN.add(" ");
+				loreSAN.add("§7Auteur : §9"+san.getSanctionerName());
+				loreSAN.add("§7Date : §9"+san.getDateToString());
+				loreSAN.add("§eID : §7"+san.getID());
+				view.inv.setItem(i, Utils.createItemStack("§e"+name, Material.PAPER, 1, loreSAN, 0, false));
 			}
 		}
 		// Create
 		else {
-			Inventory inv = Bukkit.createInventory(null, 27, "§7Historique de §b"+p.getName());
-			List<Sanction> sanctions = Mi5AgentBukkit.getContainer().getSanctions(p.getUniqueId());
+			Inventory inv = Bukkit.createInventory(null, 27, "§7Historique de §b"+otherP.getName());
+			List<Sanction> sanctions = Mi5AgentBukkit.getContainer().getSanctions(otherP.getUniqueId());
 			
 			viewers.put(p.getUniqueId(), new SanctionViewer(inv, sanctions));
 
@@ -94,7 +97,7 @@ public class PHistoryCommand implements CommandExecutor, Listener{
 			//INFO
 			ArrayList<String> loreINFO = new ArrayList<>();
 			
-			inv.setItem(4, Utils.createItemSkull(p.getName(), loreINFO, SkullType.PLAYER, p.getName(), false));
+			inv.setItem(4, Utils.createItemSkull(p.getName(), loreINFO, SkullType.PLAYER, otherP.getName(), false));
 
 			//PAGE SELECTOR
 			ArrayList<String> lorePAGE = new ArrayList<>();
@@ -103,17 +106,19 @@ public class PHistoryCommand implements CommandExecutor, Listener{
 			inv.setItem(7, Utils.createItemSkull("§7Page suivante", lorePAGE, SkullType.PLAYER, "MHF_ArrowRight", false));
 			
 			// SET SANCTIONS
-			for(int i = 9; i < sanctions.size() && i < 27; i++) {
+			for(int i = 9; i-9 < sanctions.size() && i < 27; i++) {
 				Sanction san = sanctions.get(i-9);
+				String name = san.getClass().getName();
 				ArrayList<String> loreSAN = new ArrayList<>();
-				loreSAN.add("§7Par : §9"+san.getSanctionerName());
-				loreSAN.add("§7Date : §b"+san.getDateToString());
-				if(san instanceof Mute)loreSAN.add("§7Actif : §9"+((Mute) san).hisEnable());
-				if(san instanceof Mute)loreSAN.add("§7Durée : §b"+((Mute) san).getUntilTime());
-				if(san instanceof Ban) loreSAN.add("§7Durée : §b"+((Ban) san).getUntilTime());
-				loreSAN.add("§7Motif : §c"+san.getID());
-				loreSAN.add("§7ID : §a"+san.getID());
-				inv.setItem(i, Utils.createItemStack(san.getClass().getName(), Material.PAPER, 1, loreSAN, 1, false));
+				loreSAN.add("§7Motif : §c"+san.getReason());
+				if(san instanceof Mute)loreSAN.add("§7Actif : §a"+((Mute) san).hisEnable());
+				if(san instanceof Mute)loreSAN.add("§7Durée : §9"+((Mute) san).getUntilTime());
+				if(san instanceof Ban) loreSAN.add("§7Durée : §9"+((Ban) san).getUntilTime());
+				loreSAN.add(" ");
+				loreSAN.add("§7Auteur : §9"+san.getSanctionerName());
+				loreSAN.add("§7Date : §9"+san.getDateToString());
+				loreSAN.add("§eID : §7"+san.getID());
+				inv.setItem(i, Utils.createItemStack("§e"+name, Material.PAPER, 1, loreSAN, 0, false));
 			}
 			p.openInventory(inv);
 		}
