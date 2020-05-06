@@ -215,14 +215,12 @@ public class Mi5AgentBukkit extends JavaPlugin implements Listener{
 	public void onPlayerQuit(PlayerQuitEvent e) {
 		VanishCommand.vanish.remove(e.getPlayer().getUniqueId());
 		FreezeCommand.freeze.remove(e.getPlayer().getUniqueId());
-		//e.getPlayer().setWalkSpeed(0.3f);
 	}
 	
 	@EventHandler
 	public void onPlayerKick(PlayerKickEvent e) {
 		VanishCommand.vanish.remove(e.getPlayer().getUniqueId());
 		FreezeCommand.freeze.remove(e.getPlayer().getUniqueId());
-		//e.getPlayer().setWalkSpeed(0.3f);
 	}
 	
 	@EventHandler
