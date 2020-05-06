@@ -7,6 +7,7 @@ import java.util.UUID;
 
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -26,8 +27,9 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import eu.octanne.mi5agent.commands.BanCommand;
 import eu.octanne.mi5agent.commands.FreezeCommand;
+import eu.octanne.mi5agent.commands.KickCommand;
 import eu.octanne.mi5agent.commands.MuteCommand;
-import eu.octanne.mi5agent.commands.PHisctoryCommand;
+import eu.octanne.mi5agent.commands.PHistoryCommand;
 import eu.octanne.mi5agent.commands.TBanCommand;
 import eu.octanne.mi5agent.commands.TMuteCommand;
 import eu.octanne.mi5agent.commands.UBanCommand;
@@ -59,6 +61,8 @@ public class Mi5AgentBukkit extends JavaPlugin implements Listener{
 		
 		container = new SanctionContainer();
 
+		PHistoryCommand hCommand = new PHistoryCommand();
+		
 		// Commands
 		getCommand("tempban").setExecutor(new TBanCommand());
 		getCommand("ban").setExecutor(new BanCommand());
@@ -67,9 +71,10 @@ public class Mi5AgentBukkit extends JavaPlugin implements Listener{
 		getCommand("unmute").setExecutor(new UMuteCommand());
 		getCommand("unban").setExecutor(new UBanCommand());
 		getCommand("vanish").setExecutor(new VanishCommand());
-		getCommand("phistory").setExecutor(new PHisctoryCommand());
+		getCommand("phistory").setExecutor(hCommand);
 		getCommand("freeze").setExecutor(new FreezeCommand());
 		getCommand("warn").setExecutor(new WarningCommand());
+		getCommand("kick").setExecutor(new KickCommand());
 		
 		for(Player p : Bukkit.getOnlinePlayers()) {
 			Mute mute = container.checkMute(p.getUniqueId());
@@ -77,6 +82,7 @@ public class Mi5AgentBukkit extends JavaPlugin implements Listener{
 		}
 
 		Bukkit.getPluginManager().registerEvents(this, this);
+		Bukkit.getPluginManager().registerEvents(hCommand, this);
 	}
 
 	@Override
@@ -272,7 +278,7 @@ public class Mi5AgentBukkit extends JavaPlugin implements Listener{
 			if(distance > getConfig().getDouble("anti-cheat.reach", 5)) {
 				for(Player p : Bukkit.getOnlinePlayers()) {
 					if(p.hasPermission("mi5-agent.anti-cheat.warning"))p.sendMessage("§7[§cMi5-Agent§7] §cAttention §9"+e.getDamager().getName()+" §c: §9Reach§c, §6Distance §c: "
-							+ df.format(distance));
+							+ df.format(distance)+" Ping : §9"+((CraftPlayer) e.getDamager()).getHandle().ping+"§ams");
 				}
 			}
 		}

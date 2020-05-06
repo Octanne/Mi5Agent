@@ -15,6 +15,7 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import eu.octanne.mi5agent.sanctions.Ban;
+import eu.octanne.mi5agent.sanctions.Kick;
 import eu.octanne.mi5agent.sanctions.Mute;
 import eu.octanne.mi5agent.sanctions.Sanction;
 import eu.octanne.mi5agent.sanctions.Warning;
@@ -46,6 +47,11 @@ public class SanctionContainer {
 			config.set(sanction.getID()+".sanctionerID", sanction.getSanctionerID().toString());
 			config.set(sanction.getID()+".reason", sanction.getReason());
 			config.set(sanction.getID()+".date", sanction.getDate().getTimeInMillis());
+		}else if(sanction instanceof Kick) {
+			config.set(sanction.getID()+".type", "kick");
+			config.set(sanction.getID()+".sanctionerID", sanction.getSanctionerID().toString());
+			config.set(sanction.getID()+".reason", sanction.getReason());
+			config.set(sanction.getID()+".date", sanction.getDate().getTimeInMillis());
 		}
 		try {
 			config.save(file);
@@ -74,6 +80,8 @@ public class SanctionContainer {
 				date.setTimeInMillis(config.getLong(path+".date", 0));
 				if(type.equalsIgnoreCase("warn")) {
 					sanctions.add(new Warning(playerID, sanctionerID, reason, UUID.fromString(path), date));
+				}else if(type.equalsIgnoreCase("kick")) {
+					sanctions.add(new Kick(playerID, sanctionerID, reason, UUID.fromString(path), date));
 				}else if(type.equalsIgnoreCase("ban")) {
 					Calendar untilDate = Calendar.getInstance();
 					untilDate.setTimeInMillis(config.getLong(path+".untilDate", 0));
@@ -167,6 +175,18 @@ public class SanctionContainer {
 			Warning warn = new Warning(playerID, sanctionerID, reason, null, null);
 			saveSanction(warn);
 			return warn;
+		}else return null;
+	}
+	
+	/*
+	 * applyKick
+	 */
+	public Kick applyKick(UUID playerID, @Nullable UUID sanctionerID, String reason) {
+		OfflinePlayer oPlayer = Bukkit.getOfflinePlayer(playerID);
+		if(oPlayer != null) {
+			Kick kick = new Kick(playerID, sanctionerID, reason, null, null);
+			saveSanction(kick);
+			return kick;
 		}else return null;
 	}
 	

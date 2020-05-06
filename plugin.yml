@@ -26,3 +26,5 @@ commands:
     description: Vanish command.
   freeze:
     description: Freeze command.
+  kick:
+    description: Kick command.
