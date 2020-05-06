@@ -23,6 +23,8 @@ import org.bukkit.inventory.Inventory;
 
 import eu.octanne.mi5agent.Mi5AgentBukkit;
 import eu.octanne.mi5agent.Utils;
+import eu.octanne.mi5agent.sanctions.Ban;
+import eu.octanne.mi5agent.sanctions.Mute;
 import eu.octanne.mi5agent.sanctions.Sanction;
 
 public class PHistoryCommand implements CommandExecutor, Listener{
@@ -68,7 +70,15 @@ public class PHistoryCommand implements CommandExecutor, Listener{
 			}
 			for(int i = 9*page; i < view.sanctions.size() && i < 27; i++) {
 				Sanction san = view.sanctions.get(i-9);
-				view.inv.setItem(i, Utils.createItemStack(san.getClass().getName(), Material.STAINED_GLASS_PANE, 1, new ArrayList<>(), 1, false));
+				ArrayList<String> loreSAN = new ArrayList<>();
+				loreSAN.add("§7Par : §9"+san.getSanctionerName());
+				loreSAN.add("§7Date : §b"+san.getDateToString());
+				if(san instanceof Mute)loreSAN.add("§7Actif : §9"+((Mute) san).hisEnable());
+				if(san instanceof Mute)loreSAN.add("§7Durée : §b"+((Mute) san).getUntilTime());
+				if(san instanceof Ban) loreSAN.add("§7Durée : §b"+((Ban) san).getUntilTime());
+				loreSAN.add("§7Motif : §c"+san.getID());
+				loreSAN.add("§7ID : §a"+san.getID());
+				view.inv.setItem(i, Utils.createItemStack(san.getClass().getName(), Material.PAPER, 1, loreSAN, 1, false));
 			}
 		}
 		// Create
@@ -95,7 +105,15 @@ public class PHistoryCommand implements CommandExecutor, Listener{
 			// SET SANCTIONS
 			for(int i = 9; i < sanctions.size() && i < 27; i++) {
 				Sanction san = sanctions.get(i-9);
-				inv.setItem(i, Utils.createItemStack(san.getClass().getName(), Material.STAINED_GLASS_PANE, 1, new ArrayList<>(), 1, false));
+				ArrayList<String> loreSAN = new ArrayList<>();
+				loreSAN.add("§7Par : §9"+san.getSanctionerName());
+				loreSAN.add("§7Date : §b"+san.getDateToString());
+				if(san instanceof Mute)loreSAN.add("§7Actif : §9"+((Mute) san).hisEnable());
+				if(san instanceof Mute)loreSAN.add("§7Durée : §b"+((Mute) san).getUntilTime());
+				if(san instanceof Ban) loreSAN.add("§7Durée : §b"+((Ban) san).getUntilTime());
+				loreSAN.add("§7Motif : §c"+san.getID());
+				loreSAN.add("§7ID : §a"+san.getID());
+				inv.setItem(i, Utils.createItemStack(san.getClass().getName(), Material.PAPER, 1, loreSAN, 1, false));
 			}
 			p.openInventory(inv);
 		}
@@ -109,7 +127,7 @@ public class PHistoryCommand implements CommandExecutor, Listener{
 	@EventHandler
 	public void lockInventory(InventoryClickEvent e) {
 		if (e.getClickedInventory() != null && e.getClickedInventory().getName().contains("§7Historique de §b")) e.setCancelled(true);
-
+		// TODO
 	}
 
 	@EventHandler

@@ -51,4 +51,26 @@ public abstract class Sanction {
 	public Calendar getDate() {
 		return sanctionDate;
 	}
+	
+	public String getDateToString() {
+		String day = sanctionDate.get(Calendar.DAY_OF_MONTH)+"";
+		String month = sanctionDate.get(Calendar.MONTH)+"";
+		String year = sanctionDate.get(Calendar.YEAR)+"";
+		String hour = sanctionDate.get(Calendar.HOUR_OF_DAY)+"";
+		String minutes = sanctionDate.get(Calendar.MINUTE)+"";
+		String secondes = sanctionDate.get(Calendar.SECOND)+"";
+		StringBuilder date = new StringBuilder();
+		date.append(day);
+		date.append("/");
+		date.append(month);
+		date.append("/");
+		date.append(year);
+		date.append(" ");
+		date.append(hour);
+		date.append(":");
+		date.append(minutes);
+		date.append(":");
+		date.append(secondes);
+		return date.toString();
+	}
 }
