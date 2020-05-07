@@ -1,14 +1,13 @@
 package eu.octanne.mi5agent;
 
 import java.text.DecimalFormat;
+
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.UUID;
 
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
-import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
-import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -49,23 +48,23 @@ public class Mi5AgentBukkit extends JavaPlugin implements Listener{
 	static private SanctionContainer container;
 
 	static public Plugin instance;
-	
+
 	static DecimalFormat df = new DecimalFormat("#.###");
-	
+
 	@Override
 	public void onEnable() {
 		instance = Bukkit.getPluginManager().getPlugin("Mi5-Agent");
-		
+
 		//Load Para
 		if(!getConfig().isSet("anti-cheat.reach"))getConfig().set("anti-cheat.reach", 5);
 		if(!getConfig().isSet("anti-cheat.cps"))getConfig().set("anti-cheat.cps", 16);
 		if(!getConfig().isSet("freeze-message"))getConfig().set("freeze-message", "§cVous venez d'être freeze par §9{MODO}.");
 		saveConfig();
-		
+
 		container = new SanctionContainer();
 
 		PHistoryCommand hCommand = new PHistoryCommand();
-		
+
 		// Commands
 		getCommand("tempban").setExecutor(new TBanCommand());
 		getCommand("ban").setExecutor(new BanCommand());
@@ -81,7 +80,7 @@ public class Mi5AgentBukkit extends JavaPlugin implements Listener{
 		getCommand("ping").setExecutor(new PingCommand());
 		getCommand("enderchest").setExecutor(new EnderChestCommand());
 		getCommand("invsee").setExecutor(new InvseeCommand());
-		
+
 		for(Player p : Bukkit.getOnlinePlayers()) {
 			Mute mute = container.checkMute(p.getUniqueId());
 			if(mute != null) mutePlayers.put(p.getUniqueId(), mute);
@@ -163,7 +162,7 @@ public class Mi5AgentBukkit extends JavaPlugin implements Listener{
 		public int getCritical() {
 			return criticalCount/3;
 		}
-		
+
 		public int getTotal() {
 			return totalCount/3;
 		}
@@ -177,7 +176,7 @@ public class Mi5AgentBukkit extends JavaPlugin implements Listener{
 			accurateCount++;
 			criticalCount++;
 		}
-		
+
 		public void addAccurate() {
 			totalCount++;
 			accurateCount++;
@@ -216,19 +215,19 @@ public class Mi5AgentBukkit extends JavaPlugin implements Listener{
 			}
 		}
 	}
-	
+
 	@EventHandler
 	public void onPlayerQuit(PlayerQuitEvent e) {
 		VanishCommand.vanish.remove(e.getPlayer().getUniqueId());
 		FreezeCommand.freeze.remove(e.getPlayer().getUniqueId());
 	}
-	
+
 	@EventHandler
 	public void onPlayerKick(PlayerKickEvent e) {
 		VanishCommand.vanish.remove(e.getPlayer().getUniqueId());
 		FreezeCommand.freeze.remove(e.getPlayer().getUniqueId());
 	}
-	
+
 	@EventHandler
 	public void onPlayerMove(PlayerMoveEvent e) {
 		if(e.getTo().getY() != e.getFrom().getY() || e.getTo().getBlockX() != e.getFrom().getBlockX()
@@ -236,21 +235,21 @@ public class Mi5AgentBukkit extends JavaPlugin implements Listener{
 			if(FreezeCommand.freeze.contains(e.getPlayer().getUniqueId()))e.setTo(e.getFrom());;
 		}
 	}
-	
+
 	@EventHandler
 	public void onPlayerCommand(PlayerCommandPreprocessEvent e) {
 		if(FreezeCommand.freeze.contains(e.getPlayer().getUniqueId())){
 			if(!e.getMessage().toLowerCase().startsWith("/msg") && !e.getMessage().toLowerCase().startsWith("/tell") 
 					&& !e.getMessage().toLowerCase().startsWith("/r") && !e.getMessage().toLowerCase().startsWith("/freeze")) {
-						e.setCancelled(true);
+				e.setCancelled(true);
 			}
 		}
 	}
 
 	@EventHandler
 	public void onAttackPlayer(EntityDamageByEntityEvent e) {
-		if(e.getDamager() instanceof Player && (((HumanEntity) e.getDamager()).getGameMode().equals(GameMode.SURVIVAL) 
-				|| ((HumanEntity) e.getDamager()).getGameMode().equals(GameMode.ADVENTURE))){
+		if(e.getDamager() instanceof Player && (((Player) e.getDamager()).getGameMode().equals(GameMode.SURVIVAL) 
+				|| ((Player) e.getDamager()).getGameMode().equals(GameMode.ADVENTURE))){
 			if(cpsProfile.containsKey(e.getDamager().getUniqueId())) {
 				CPSProfile profile = cpsProfile.get(e.getDamager().getUniqueId());
 				if(profile.isEnd()) {
@@ -275,16 +274,18 @@ public class Mi5AgentBukkit extends JavaPlugin implements Listener{
 				else profile.addCritical();
 				cpsProfile.put(e.getDamager().getUniqueId(), profile);
 			}
-			
-			//Reach
-			double distance = e.getDamager().getLocation().distance(e.getEntity().getLocation());
-			//Bukkit.getLogger().info(e.getDamager().getName()+" Reach : "+distance);
+		}
+		
+		//Reach
+		/*if(e.getDamager() instanceof Player && e.getEntity() instanceof Player) {
+			double distance = ((Player) e.getDamager()).getEyeLocation().distance(((Player) e.getEntity()).getEyeLocation());
+
 			if(distance > getConfig().getDouble("anti-cheat.reach", 5)) {
 				for(Player p : Bukkit.getOnlinePlayers()) {
 					if(p.hasPermission("mi5-agent.anti-cheat.warning"))p.sendMessage("§7[§cMi5-Agent§7] §cAttention §9"+e.getDamager().getName()+" §c: §9Reach§c, §6Distance §c: "
 							+ df.format(distance)+" §ePing §7: §9"+((CraftPlayer) e.getDamager()).getHandle().ping+"§ams");
 				}
 			}
-		}
+		}*/
 	}
 }
