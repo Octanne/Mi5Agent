@@ -282,7 +282,7 @@ public class Mi5AgentBukkit extends JavaPlugin implements Listener{
 			if(distance > getConfig().getDouble("anti-cheat.reach", 5)) {
 				for(Player p : Bukkit.getOnlinePlayers()) {
 					if(p.hasPermission("mi5-agent.anti-cheat.warning"))p.sendMessage("§7[§cMi5-Agent§7] §cAttention §9"+e.getDamager().getName()+" §c: §9Reach§c, §6Distance §c: "
-							+ df.format(distance)+" Ping : §9"+((CraftPlayer) e.getDamager()).getHandle().ping+"§ams");
+							+ df.format(distance)+" §ePing §7: §9"+((CraftPlayer) e.getDamager()).getHandle().ping+"§ams");
 				}
 			}
 		}
